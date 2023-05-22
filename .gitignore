@@ -1,0 +1,8 @@
+# IDC / Editor
+.fleet/
+.idea/
+.vscode/
+
+# temps
+bin/
+.temp/
