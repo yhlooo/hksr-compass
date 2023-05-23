@@ -32,6 +32,11 @@ func (step *Step) String() string {
 	return fmt.Sprintf("%s%d", ringGroupShortNames[step.RingGroup], step.Count)
 }
 
+// Validate 合法化
+func (step *Step) Validate() error {
+	return nil
+}
+
 // Steps 转动引航罗盘的步骤组合
 type Steps []Step
 
@@ -49,11 +54,11 @@ func (steps Steps) Standardize() Steps {
 	})
 	// 合并
 	var simplified Steps
-	for i, s := range sorted {
+	for _, s := range sorted {
 		if s.Count <= 0 {
 			continue
 		}
-		if i > 0 && simplified[len(simplified)-1].RingGroup == s.RingGroup {
+		if len(simplified) > 0 && simplified[len(simplified)-1].RingGroup == s.RingGroup {
 			simplified[len(simplified)-1].Count += s.Count
 		} else {
 			simplified = append(simplified, s)
@@ -76,4 +81,9 @@ func (steps Steps) String() string {
 	}
 	// 逗号连接
 	return strings.Join(stepStrs, ",")
+}
+
+// Validate TODO 合法化
+func (steps Steps) Validate() error {
+	return nil
 }

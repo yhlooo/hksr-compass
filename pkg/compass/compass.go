@@ -38,3 +38,21 @@ type Compass struct {
 	// 可以同时旋转的一个或多个圈组成一个分组
 	RingGroups []RingGroup
 }
+
+// Validate TODO 合法化
+func (compass *Compass) Validate() error {
+	return nil
+}
+
+// IsRingGroupSupported 判断指定圈分组是否是当前罗盘支持的
+func (compass *Compass) IsRingGroupSupported(rg RingGroup) bool {
+	if compass == nil {
+		return false
+	}
+	for _, supportedRG := range compass.RingGroups {
+		if supportedRG == rg {
+			return true
+		}
+	}
+	return false
+}
