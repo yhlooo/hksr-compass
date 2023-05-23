@@ -21,6 +21,6 @@ type defaultSolver struct {
 var _ Solver = &defaultSolver{}
 
 // Solve TODO 求解引航罗盘
-func (s *defaultSolver) Solve(ctx context.Context, compass Compass) ([]Step, error) {
+func (s *defaultSolver) Solve(ctx context.Context, compass Compass) (Steps, error) {
 	return nil, nil
 }
