@@ -35,6 +35,7 @@ func (s *defaultSolver) Solve(_ context.Context, compass Compass) (Steps, error)
 			// 撞到了一个有效的解法
 			return solution.Standardize(), nil
 		}
+		s.logger.V(1).Info(fmt.Sprintf("try solution '%s' failed", solution.String()))
 	}
 
 	return nil, fmt.Errorf("the compass has no solution")
