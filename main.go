@@ -10,10 +10,17 @@ import (
 	"github.com/keybrl/hksr-compass/pkg/commands"
 )
 
+var (
+	version = "0.0.0-dev"
+)
+
 func main() {
+	// 将中断信号绑定到上下文
 	ctx, cancel := notifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer cancel()
-
+	// 设置版本
+	commands.Cmd.Version = version
+	// 执行命令
 	if err := commands.Cmd.ExecuteContext(ctx); err != nil {
 		log.Fatal(err)
 	}

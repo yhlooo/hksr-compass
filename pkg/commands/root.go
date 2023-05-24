@@ -8,7 +8,6 @@ import (
 
 const (
 	binName = "hksr-compass"
-	version = "0.1.0"
 )
 
 var (
@@ -17,9 +16,8 @@ var (
 
 // Cmd 根命令
 var Cmd = &cobra.Command{
-	Use:     binName,
-	Short:   "A tool for solving the Navigation Compass in the game Honkai: Star Rail.",
-	Version: version,
+	Use:   binName,
+	Short: "A tool for solving the Navigation Compass in the game Honkai: Star Rail.",
 	PersistentPreRunE: func(cmd *cobra.Command, args []string) error {
 		return nil
 	},
