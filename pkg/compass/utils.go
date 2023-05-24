@@ -1,6 +1,8 @@
 package compass
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // CheckSolution 检查罗盘解决结果
 func CheckSolution(compass Compass, steps Steps) (bool, error) {

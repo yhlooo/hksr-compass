@@ -1,5 +1,11 @@
 package compass
 
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
+
 // Ring 引航罗盘中的一圈
 type Ring struct {
 	// 位置
@@ -98,4 +104,68 @@ func (compass *Compass) IsRingGroupSupported(rg RingGroup) bool {
 		}
 	}
 	return false
+}
+
+// Standardize 标准化
+func (compass *Compass) Standardize() *Compass {
+	if compass == nil {
+		return nil
+	}
+
+	// 对 RingGroups 排序、去重
+	rgs := make([]RingGroup, len(compass.RingGroups))
+	copy(rgs, compass.RingGroups)
+	sort.Slice(rgs, func(i, j int) bool {
+		return rgs[i] < rgs[j]
+	})
+	var deduplicatedRGs []RingGroup
+	for _, rg := range rgs {
+		if len(deduplicatedRGs) > 0 && deduplicatedRGs[len(deduplicatedRGs)-1] == rg {
+			continue
+		}
+		deduplicatedRGs = append(deduplicatedRGs, rg)
+	}
+
+	return &Compass{
+		InnerRing: Ring{
+			Location: (compass.InnerRing.Location%6 + 6) % 6,
+			Speed:    compass.InnerRing.Speed % 6,
+		},
+		MiddleRing: Ring{
+			Location: (compass.MiddleRing.Location%6 + 6) % 6,
+			Speed:    compass.MiddleRing.Speed % 6,
+		},
+		OuterRing: Ring{
+			Location: (compass.OuterRing.Location%6 + 6) % 6,
+			Speed:    compass.OuterRing.Speed % 6,
+		},
+		RingGroups: deduplicatedRGs,
+	}
+}
+
+// String 转为字符串表示
+func (compass *Compass) String() string {
+	if compass == nil {
+		return ""
+	}
+
+	// 标准化
+	std := compass.Standardize()
+	// 转换 RingGroups
+	rgStrs := make([]string, len(std.RingGroups))
+	for i := range rgStrs {
+		rgStrs[i] = std.RingGroups[i].ShortName()
+	}
+	rgsStr := strings.Join(rgStrs, ",")
+	// 组合
+	return fmt.Sprintf(
+		"%d%+d,%d%+d,%d%+d/%s",
+		std.OuterRing.Location,
+		std.OuterRing.Speed,
+		std.MiddleRing.Location,
+		std.MiddleRing.Speed,
+		std.InnerRing.Location,
+		std.InnerRing.Speed,
+		rgsStr,
+	)
 }
