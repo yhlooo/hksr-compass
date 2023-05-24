@@ -3,6 +3,7 @@ package compass
 import (
 	"context"
 	"fmt"
+	"sort"
 
 	"github.com/go-logr/logr"
 )
@@ -64,6 +65,19 @@ func (s *defaultSolver) getPossibleSolutions(compass Compass) []Steps {
 		}
 		possibleSolutions = temp
 	}
+
+	// 按步骤数排序
+	sort.SliceStable(possibleSolutions, func(i, j int) bool {
+		sumI := 0
+		for _, step := range possibleSolutions[i] {
+			sumI += step.Count
+		}
+		sumJ := 0
+		for _, step := range possibleSolutions[j] {
+			sumI += step.Count
+		}
+		return sumI < sumJ
+	})
 
 	return possibleSolutions
 }

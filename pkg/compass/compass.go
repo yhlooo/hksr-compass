@@ -14,17 +14,60 @@ type Ring struct {
 }
 
 // RingGroup 引航罗盘圈分组
-type RingGroup string
+type RingGroup uint8
 
 // RingGroup 的合法值
 const (
-	OuterRingGroup       RingGroup = "Outer"
-	MiddleRingGroup      RingGroup = "Middle"
-	InnerRingGroup       RingGroup = "Inner"
-	OuterMiddleRingGroup RingGroup = "OuterMiddle"
-	OuterInnerRingGroup  RingGroup = "OuterInner"
-	MiddleInnerRingGroup RingGroup = "MiddleInner"
+	OuterRingGroup       RingGroup = 0b100
+	MiddleRingGroup      RingGroup = 0b010
+	InnerRingGroup       RingGroup = 0b001
+	OuterMiddleRingGroup           = OuterRingGroup | MiddleRingGroup
+	OuterInnerRingGroup            = OuterRingGroup | InnerRingGroup
+	MiddleInnerRingGroup           = MiddleRingGroup | InnerRingGroup
 )
+
+// Name 返回名
+func (rg RingGroup) Name() string {
+	switch rg {
+	case OuterRingGroup:
+		return "Outer"
+	case MiddleRingGroup:
+		return "Middle"
+	case InnerRingGroup:
+		return "Inner"
+	case OuterMiddleRingGroup:
+		return "OuterMiddle"
+	case OuterInnerRingGroup:
+		return "OuterInner"
+	case MiddleInnerRingGroup:
+		return "MiddleInner"
+	}
+	return ""
+}
+
+// ShortName 返回简写名
+func (rg RingGroup) ShortName() string {
+	switch rg {
+	case OuterRingGroup:
+		return "o"
+	case MiddleRingGroup:
+		return "m"
+	case InnerRingGroup:
+		return "i"
+	case OuterMiddleRingGroup:
+		return "om"
+	case OuterInnerRingGroup:
+		return "oi"
+	case MiddleInnerRingGroup:
+		return "mi"
+	}
+	return ""
+}
+
+// String 返回字符串表示
+func (rg RingGroup) String() string {
+	return rg.Name()
+}
 
 // Compass 引航罗盘
 type Compass struct {

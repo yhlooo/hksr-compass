@@ -21,26 +21,18 @@ func CheckSolution(compass Compass, steps Steps) (bool, error) {
 		if !compass.IsRingGroupSupported(s.RingGroup) {
 			return false, fmt.Errorf(
 				"steps contains ring group not supported by compass: %s (must be one of %v)",
-				s.RingGroup,
+				s.RingGroup.Name(),
 				compass.RingGroups,
 			)
 		}
 
-		switch s.RingGroup {
-		case InnerRingGroup:
-			inner += s.Count * compass.InnerRing.Speed
-		case MiddleRingGroup:
-			middle += s.Count * compass.MiddleRing.Speed
-		case MiddleInnerRingGroup:
-			middle += s.Count * compass.MiddleRing.Speed
-			inner += s.Count * compass.InnerRing.Speed
-		case OuterRingGroup:
+		if s.RingGroup&OuterRingGroup > 0 {
 			outer += s.Count * compass.OuterRing.Speed
-		case OuterMiddleRingGroup:
-			outer += s.Count * compass.OuterRing.Speed
+		}
+		if s.RingGroup&MiddleRingGroup > 0 {
 			middle += s.Count * compass.MiddleRing.Speed
-		case OuterInnerRingGroup:
-			outer += s.Count * compass.OuterRing.Speed
+		}
+		if s.RingGroup&InnerRingGroup > 0 {
 			inner += s.Count * compass.InnerRing.Speed
 		}
 	}

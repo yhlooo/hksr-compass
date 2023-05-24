@@ -14,22 +14,12 @@ type Step struct {
 	Count int
 }
 
-// ringGroupShortNames RingGroup 的缩写
-var ringGroupShortNames = map[RingGroup]string{
-	OuterRingGroup:       "o",
-	MiddleRingGroup:      "m",
-	InnerRingGroup:       "i",
-	OuterMiddleRingGroup: "om",
-	OuterInnerRingGroup:  "oi",
-	MiddleInnerRingGroup: "mi",
-}
-
 // String 转为字符串表示
 func (step *Step) String() string {
 	if step == nil || step.Count <= 0 {
 		return ""
 	}
-	return fmt.Sprintf("%s%d", ringGroupShortNames[step.RingGroup], step.Count)
+	return fmt.Sprintf("%s%d", step.RingGroup.ShortName(), step.Count)
 }
 
 // Validate 合法化

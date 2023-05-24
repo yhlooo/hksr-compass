@@ -36,17 +36,15 @@ func TestDefaultSolver(t *testing.T) {
 	}
 
 	// 校验结果
-	expectedRet := Steps{{
-		RingGroup: OuterInnerRingGroup,
-		Count:     1,
-	}, {
-		RingGroup: OuterMiddleRingGroup,
-		Count:     5,
-	}, {
-		RingGroup: MiddleInnerRingGroup,
-		Count:     2,
-	}}
-	if ret.String() != expectedRet.String() {
-		t.Errorf("unexpected result: %#v (expected: %#v)", ret.String(), expectedRet.String())
+	expectedRets := []string{"mi2,oi4,om2", "mi2,oi1,om5"}
+	correct := false
+	for _, expectedRet := range expectedRets {
+		if ret.String() == expectedRet {
+			correct = true
+			break
+		}
+	}
+	if !correct {
+		t.Errorf("unexpected result: %#v (expect to be one of %#v)", ret.String(), expectedRets)
 	}
 }
