@@ -5,11 +5,11 @@ import (
 )
 
 // CheckSolution 检查罗盘解决结果
-func CheckSolution(compass Compass, steps Steps) (bool, error) {
+func CheckSolution(compass Compass, solution Steps) (bool, error) {
 	if err := compass.Validate(); err != nil {
 		return false, fmt.Errorf("compass validation error: %w", err)
 	}
-	if err := steps.Validate(); err != nil {
+	if err := solution.Validate(); err != nil {
 		return false, fmt.Errorf("steps validation error: %w", err)
 	}
 
@@ -19,7 +19,7 @@ func CheckSolution(compass Compass, steps Steps) (bool, error) {
 	outer := compass.OuterRing.Location
 
 	// 转一下
-	for _, s := range steps {
+	for _, s := range solution {
 		if !compass.IsRingGroupSupported(s.RingGroup) {
 			return false, fmt.Errorf(
 				"steps contains ring group not supported by compass: %s (must be one of %v)",
