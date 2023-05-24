@@ -2,6 +2,8 @@
 
 游戏“崩坏：星穹铁道”中“引航罗盘”的求解工具。
 
+![compass](docs/images/compass.png)
+
 ## 使用方式
 
 1. 获取 hksr-compass 二进制
@@ -28,7 +30,11 @@
    hksr-compass solve COMPASS_EXPRESSION
    ```
 
-其中 `COMPASS_EXPRESSION` 为罗盘表达式，其格式为 `{oLoc}{oSpeed},{mLoc}{mSpeed},{iLoc}{iSpeed}/{rg1},{rg2},{rg3}`
+其中 `COMPASS_EXPRESSION` 为罗盘表达式，其格式为
+
+```
+{oLoc}{oSpeed},{mLoc}{mSpeed},{iLoc}{iSpeed}/{rg1},{rg2},{rg3}
+```
 
 其中：
 
@@ -79,7 +85,7 @@ Solution: mi2,oi4,om2
 - `oi` 外圈和内圈一起转
 - `mi` 中圈和内圈一起转
 
-比如 `mi2` 表示旋转中圈和内圈 2 次
+比如 `mi2,oi4,om2` 表示旋转中圈和内圈 2 次，然后旋转外圈和内圈 4 次，最后旋转外圈和中圈 2 次。
 
 ## 致谢
 
